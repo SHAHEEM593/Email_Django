@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>View Posts</h1>
+  {% if posts %}
+    <ul>
+      {% for post in posts %}
+        <li>
+          <h2>{{ post.user }}</h2>
+          <p>{{ post.caption }}</p>
+          {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post Image">
+          {% endif %}
+          <a href="{% url 'update_post' pk=post.pk %}" class="btn btn-primary">Update</a>
+          <form action="{% url 'delete_post' pk=post.pk %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          <form action="{% url 'like_post' pk=post.pk %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Like</button>
+          </form>
+          <span>{{ post.likes_count }} likes</span>
+          <a href="{% url 'add_comment' pk=post.pk %}" class="btn btn-primary">Comment</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No posts available.</p>
+  {% endif %}
+
+  {% if post %}
+    <h1>Post Detail</h1>
+    <h2>{{ post.user }}</h2>
+    <p>{{ post.caption }}</p>
+    {% if post.image %}
+      <img src="{{ post.image.url }}" alt="Post Image">
+    {% endif %}
+
+    <!-- Add Like functionality -->
+    <form action="{% url 'like_post' pk=post.pk %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary">Like</button>
+    </form>
+    <span>{{ post.likes_count }} like</span>
+
+    <!-- Add Comment functionality -->
+    <form action="{% url 'add_comment' pk=post.pk %}" method="POST">
+      {% csrf_token %}
+      <textarea name="comment_text" placeholder="Add a comment"></textarea>
+      <button type="submit" class="btn btn-primary">Add Comment</button>
+    </form>
+  {% endif %}
+{% endblock %}

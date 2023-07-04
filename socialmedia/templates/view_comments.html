@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Post Detail</h1>
+    <h2>{{ post.user }}</h2>
+    <p>{{ post.caption }}</p>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image">
+    {% endif %}
+
+    <h2>Comments</h2>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li>{{ comment.user }}: {{ comment.text }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No comments available.</p>
+    {% endif %}
+
+    <h2>Likes</h2>
+    <p>{{ post.likes.count }} likes</p>
+
+{% endblock %}

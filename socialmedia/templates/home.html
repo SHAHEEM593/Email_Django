@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Social Media App</h1>
+    <a href="{% url 'upload_post' %}" class="btn">Upload Post</a>
+    <a href="{% url 'view_posts' %}" class="btn">View Posts</a>
+    <a href="{% url 'send_email' %}" class="btn">Send Email</a>
+{% endblock content %}

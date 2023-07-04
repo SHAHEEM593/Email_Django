@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'view_comments' pk=post.pk %}" method="post">
+  {% csrf_token %}
+    <input type="text" name="command" placeholder="Enter a command">
+    <button type="submit" class="btn btn-primary">Execute</button>
+  </form>
+{% endblock content %}
